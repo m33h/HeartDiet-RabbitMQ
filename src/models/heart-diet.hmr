@@ -32,21 +32,25 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TYPES DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%%%
 
-xtype [name: diet_goal_range,
-       base: symbolic,
-       domain: [reduce_mass, maintain_mass, build_mass]
+xtype [name: nutrition_range,
+       base: numeric,
+       domain: [0 to 2000]
       ].
-xtype [name: current_meals_count,
+xtype [name: meals_count,
        base: numeric,
        domain: [0 to 8]
       ].
-xtype [name: kcal_demand_range,
+xtype [name: diet_kcal_range,
        base: numeric,
        domain: [0 to 4000]
       ].
-xtype [name: proteins_range,
-       base: numeric,
-       domain: [0 to 1000]
+xtype [name: diet_goals,
+       base: symbolic,
+       domain: [reduce, maintain, put_on]
+      ].
+xtype [name: state_change_triggers,
+       base: symbolic,
+       domain: [meal_added, profile_update]
       ].
 xtype [name: fats_range,
        base: numeric,
@@ -68,63 +72,108 @@ xtype [name: decision_rate_range,
        base: numeric,
        domain: [0 to 10]
       ].
+xtype [name: sex_options,
+       base: symbolic,
+       domain: [male, female]
+      ].
+xtype [name: mass_range,
+       base: numeric,
+       domain: [30 to 150]
+      ].
+xtype [name: height_range,
+       base: numeric,
+       domain: [120 to 220]
+      ].
+xtype [name: age_range,
+       base: numeric,
+       domain: [16 to 120]
+      ].
+xtype [name: activity_factor_range,
+       base: numeric,
+       domain: [0.00 to 3.00]
+      ].
 
 %%%%%%%%%%%%%%%%%%%%%%%%% ATTRIBUTES DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%%%
 
-xattr [name: suggested_diet_goal,
-       abbrev: suggested_goal,
+xattr [name: proteins,
+       abbrev: diet_day_proteins_sum,
        class: simple,
-       type: diet_goal_range,
+       type: nutrition_range,
        comm: inter
-      ].
-xattr [name: diet_goal_decision_rate,
-       abbrev: goal_rate,
+       ].
+xattr [name: fats,
+       abbrev: diet_day_fats_sum,
        class: simple,
-       type: decision_rate_range,
+       type: nutrition_range,
        comm: inter
-      ].
-xattr [name: patient_bmi,
-       abbrev: bmi,
+       ].
+xattr [name: sugars,
+       abbrev: diet_day_sugars_sum,
        class: simple,
-       type: patient_bmi_range,
+       type: nutrition_range,
        comm: inter
-      ].
+       ].
+xattr [name: current_meals_count,
+       abbrev: diet_day_meals_count,
+       class: simple,
+       type: meals_count,
+       comm: inter
+       ].
 xattr [name: kcal_demand,
-       abbrev: kcal_demand,
+       abbrev: diet_day_overall_kcal_demand,
        class: simple,
-       type: kcal_demand_range,
+       type: diet_kcal_range,
        comm: inter
-      ].
-xattr [name: current_diet_kcal,
-       abbrev: current_kcal,
+       ].
+xattr [name: diet_goal,
+       abbrev: diet_goal,
        class: simple,
-       type: current_diet_kcal_range,
+       type: diet_goals,
        comm: inter
-      ].
+       ].
+xattr [name: state_change_trigger,
+       abbrev: event_that_trigger_dietary_state_change,
+       class: simple,
+       type: state_change_triggers,
+       comm: inter
+       ].
+xattr [name: sex,
+       abbrev: patient_sex,
+       class: simple,
+       type: sex_options,
+       comm: inter
+       ].
+xattr [name: mass,
+       abbrev: patient_mass,
+       class: simple,
+       type: mass_range,
+       comm: inter
+       ].
+xattr [name: height,
+       abbrev: patient_height,
+       class: simple,
+       type: height_range,
+       comm: inter
+       ].
+xattr [name: age,
+       abbrev: patient_age,
+       class: simple,
+       type: age_range,
+       comm: inter
+       ].
+xattr [name: activity_factor,
+       abbrev: patient_activity_factor,
+       class: simple,
+       type: activity_factor_range,
+       comm: inter
+       ].
+
 
 %%%%%%%%%%%%%%%%%%%%%%%% TABLE SCHEMAS DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%
 
-xschm 'DietGoalDecision': [patient_bmi, kcal_demand, current_diet_kcal] ==> [diet_goal_decision_rate].
-xschm 'SuggestedDietGoal': [patient_bmi, kcal_demand] ==> [suggested_diet_goal].
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% RULES DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-xrule 'SuggestedDietGoal'/1:
-      [patient_bmi in [0.000 to 18.500]]
-    ==>
-      [suggested_diet_goal set build_mass].
-
-
-xrule 'SuggestedDietGoal'/2:
-      [patient_bmi in [18.001 to 24.999]]
-    ==>
-      [suggested_diet_goal set maintain_mass].
-
-
-xrule 'SuggestedDietGoal'/3:
-      [patient_bmi in [25.001 to 50.000]]
-    ==>
-      [suggested_diet_goal set reduce_mass].
 
 %%%%%%%%%%%%%%%%%%%%%%%%% STATES DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%%%
 
