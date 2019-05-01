@@ -71,111 +71,110 @@ public class HeartDietInference {
             }
 
 
-//            //Printing all the tables and rules within the model
-//            LinkedList<Table> tables = model.getTables();
-//            for (Table t : tables) {
-//                System.out.println("Table id:" + t.getId());
-//                System.out.println("Table name:" + t.getName());
-//                LinkedList<Attribute> cond = t.getPrecondition();
-//                for (Attribute a : cond) {
-//                    System.out.println("schm Cond: " + a.getName());
-//                }
-//                LinkedList<Attribute> concl = t.getConclusion();
-//                for (Attribute a : concl) {
-//                    System.out.println("schm Conclusion: " + a.getName());
-//                }
-//
-//                System.out.println("RULES FOR TABLE " + t.getName());
-//
-//                for (Rule r : t.getRules()) {
-//                    System.out.print("Rule id: " + r.getId() + ":\n\tIF ");
-//                    for (Formulae f : r.getConditions()) {
-//                        System.out.print(f.getLHS() + " " + f.getOp() + " " + f.getRHS() + ", ");
-//                    }
-//
-//                    System.out.println("THEN ");
-//
-//                    for (Decision d : r.getDecisions()) {
-//                        System.out.print("\t" + d.getAttribute().getName() + "is set to ");
-//
-//                        ExpressionInterface e = d.getDecision();
-//                        System.out.print(e);
-//                    }
-//                    System.out.println();
-//
-//                }
-//                System.out.println();
-//                System.out.println("=============================");
-//            }
-//
-//
-//            // Creating StateElements objects, one for each attribute
-//            StateElement hourE = new StateElement();
-//            StateElement dayE = new StateElement();
-//            StateElement locationE = new StateElement();
-//            StateElement activityE = new StateElement();
-//
-//            // Setting the values of the state elements
-//            hourE.setAttributeName("hour");
-//            hourE.setValue(new SimpleNumeric(16d));
-//            dayE.setAttributeName("day");
-//            dayE.setValue(new SimpleSymbolic("mon", 1));
-//
-//            locationE.setAttributeName("location");
-//            locationE.setValue(new SimpleSymbolic("work"));
-//
-//            activityE.setAttributeName("activity");
-//            activityE.setValue(new SimpleSymbolic("walking"));
-//
-//            //Creating a XTTState object that agregates all the StateElements
-//            State XTTstate = new State();
-//            XTTstate.addStateElement(hourE);
-//            XTTstate.addStateElement(dayE);
-//            XTTstate.addStateElement(locationE);
-//            XTTstate.addStateElement(activityE);
-//
-//
-//            try {
-//                Debug.debugLevel = Debug.Level.SILENT;
-//                HeaRT.fixedOrderInference(model, new String[]{"DayTime", "Today", "Actions", "Threats"},
-//                        new Configuration.Builder().setCsr(new ConflictSetFireAll())
-//                                .setInitialState(XTTstate)
-//                                .build());
-//
-//
-//                System.out.println("Printing current state (after inference FOI)");
-//                State current = HeaRT.getWm().getCurrentState(model);
-//                for (StateElement se : current) {
-//                    results.put(se.getAttributeName(), se.getValue());
-//                    System.out.println("Attribute " + se.getAttributeName() + " = " + se.getValue());
-//                }
-//
-//                System.out.println("\n\n");
-//                System.out.println(results.toJSONString());
-//                System.out.println("\n\n");
-//
-//
-//            } catch (UnsupportedOperationException e) {
-//                e.printStackTrace();
-//            } catch (AttributeNotRegisteredException e) {
-//                // TODO Auto-generated catch block
-//                e.printStackTrace();
-//            }
+            //Printing all the tables and rules within the model
+            LinkedList<Table> tables = model.getTables();
+            for(Table t : tables){
+                System.out.println("Table id:"+t.getId());
+                System.out.println("Table name:"+t.getName());
+                LinkedList<Attribute> cond = t.getPrecondition();
+                for(Attribute a : cond){
+                    System.out.println("schm Cond: "+a.getName());
+                }
+                LinkedList<Attribute> concl = t.getConclusion();
+                for(Attribute a : concl){
+                    System.out.println("schm Conclusion: "+a.getName());
+                }
+
+                System.out.println("RULES FOR TABLE "+t.getName());
+
+                for(Rule r : t.getRules()){
+                    System.out.print("Rule id: "+r.getId()+ ":\n\tIF ");
+                    for(Formulae f : r.getConditions()){
+                        System.out.print(f.getLHS()+" "+f.getOp()+" "+f.getRHS()+", ");
+                    }
+
+                    System.out.println("THEN ");
+
+                    for(Decision d: r.getDecisions()){
+                        System.out.print("\t"+d.getAttribute().getName()+"is set to ");
+
+                        ExpressionInterface e = d.getDecision();
+                        System.out.print(e);
+                    }
+                    System.out.println();
+
+                }
+                System.out.println();
+                System.out.println("=============================");
+            }
+
+            // Creating StateElements objects, one for each attribute
+//			StateElement suggestedDietGoalE = new StateElement();
+//			suggestedDietGoalE.setAttributeName("suggested_diet_goal");
+
+//			StateElement dietGoalDecisionRateE = new StateElement();
+//			dietGoalDecisionRateE.setAttributeName("diet_goal_decision_rate");
+
+//			StateElement kcalDemandE = new StateElement();
+//			kcalDemandE.setAttributeName("kcal_demand");
+
+//			StateElement currentDietKcalE = new StateElement();
+//			currentDietKcalE.setAttributeName("diet_goal_kcal");
+
+            StateElement patientBmiE = new StateElement();
+            patientBmiE.setAttributeName("patient_bmi");
+            patientBmiE.setValue(new SimpleNumeric(16d));
+
+            //Creating a XTTState object that agregates all the StateElements
+            State XTTstate = new State();
+//			XTTstate.addStateElement(suggestedDietGoalE);
+            XTTstate.addStateElement(patientBmiE);
+//			XTTstate.addStateElement(dietGoalDecisionRateE);
+//			XTTstate.addStateElement(kcalDemandE);
+//			XTTstate.addStateElement(currentDietKcalE);
+
+            System.out.println("Printing current state before inference");
+            State current = HeaRT.getWm().getCurrentState(model);
+
+            for (StateElement se : current) {
+                System.out.println("Attribute " + se.getAttributeName() + " = " + se.getValue());
+            }
+
+            try {
+                Debug.debugLevel = Debug.Level.SILENT;
+                HeaRT.fixedOrderInference(model, new String[]{"SuggestedDietGoal"},
+                        new Configuration.Builder().setCsr(new ConflictSetFireAll())
+                                .setInitialState(XTTstate)
+                                .build());
+
+            } catch(UnsupportedOperationException e){
+                e.printStackTrace();
+            } catch (AttributeNotRegisteredException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 
 
+            System.out.println("Printing current state (after inference FOI)");
+            current = HeaRT.getWm().getCurrentState(model);
+            for (StateElement se : current) {
+                System.err.println("Attribute " + se.getAttributeName() + " = " + se.getValue());
+            }
+
+
+            } catch (UnsupportedOperationException e) {
+                e.printStackTrace();
+            }
+
+
+        catch (BuilderException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
-//        catch (BuilderException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        catch (UnsupportedOperationException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        catch (NotInTheDomainException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
+        catch (NotInTheDomainException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         catch (ModelBuildingException e) {
             e.printStackTrace();
         }
