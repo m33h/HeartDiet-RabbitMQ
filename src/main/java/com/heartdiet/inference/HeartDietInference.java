@@ -12,15 +12,7 @@ import heart.parser.hmr.runtime.SourceFile;
 import heart.uncertainty.ConflictSetFireAll;
 import heart.xtt.*;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.LinkedList;
-
-import static java.lang.Thread.sleep;
 
 public class HeartDietInference {
     private String modelFilepath;
@@ -195,43 +187,6 @@ public class HeartDietInference {
             XTTstate.addStateElement(patientSugarsE);
             XTTstate.addStateElement(patientFatsE);
 
-            // threat monitor state elements do
-//
-//            // Creating StateElements objects, one for each attribute
-//            StateElement hourE = new StateElement();
-//            StateElement dayE = new StateElement();
-//            StateElement locationE = new StateElement();
-//            StateElement activityE = new StateElement();
-//
-//            // Setting the values of the state elements
-//            hourE.setAttributeName("hour");
-//            hourE.setValue(new SimpleNumeric(16d));
-//            dayE.setAttributeName("day");
-//            dayE.setValue(new SimpleSymbolic("mon",1));
-//
-//            locationE.setAttributeName("location");
-//            locationE.setValue(new SimpleSymbolic("work"));
-//
-//            activityE.setAttributeName("activity");
-//            activityE.setValue(new SimpleSymbolic("walking"));
-//
-//
-//
-//
-//
-//
-//            //Creating a XTTState object that agregates all the StateElements
-//            XTTstate.addStateElement(hourE);
-//            XTTstate.addStateElement(dayE);
-//            XTTstate.addStateElement(locationE);
-//            XTTstate.addStateElement(activityE);
-
-
-
-
-
-            //  end
-
             System.out.println("DD1");
             System.out.println("Printing current state before inference");
             State current = HeaRT.getWm().getCurrentState(model);
@@ -242,12 +197,10 @@ public class HeartDietInference {
 
             System.out.println("DD2");
             Debug.debugLevel = Debug.Level.WARNING;
-            HeaRT.fixedOrderInference(model, new String[]{"DietGoalDecision"},
+            HeaRT.fixedOrderInference(model, new String[]{"DietGoalDecision", "CurrentMealsCountInfo"},
                     new Configuration.Builder().setCsr(new ConflictSetFireAll())
                             .setInitialState(XTTstate)
                             .build());
-//            HeaRT.fixedOrderInference(model, new String[]{"DayTime", "Today", "Actions", "Threats"}, // threat monitor
-
 
             System.out.println("Printing current state (after inference FOI)");
             current = HeaRT.getWm().getCurrentState(model);

@@ -94,7 +94,9 @@ xtype [name: activity_factor_range,
       ].
 xtype [name: backend_message,
        base: symbolic,
-       domain: [poor_decision, normal_decision, good_decision]
+       domain: [poor_decision, normal_decision, good_decision,
+                first_meal_added, no_meals_in_diet, need_more_meals_in_diet,
+                may_have_more_meals_in_diet]
       ].
 
 
@@ -180,6 +182,12 @@ xattr [name: diet_goal_decision,
        type: backend_message,
        comm: inter
        ].
+xattr [name: current_meals_count_info,
+       abbrev: meals_count_message,
+       class: simple,
+       type: backend_message,
+       comm: inter
+       ].
 
 
 
@@ -189,6 +197,7 @@ xattr [name: diet_goal_decision,
 %%%%%%%%%%%%%%%%%%%%%%%% TABLE SCHEMAS DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%
 
 xschm 'DietGoalDecision': [height] ==> [diet_goal_decision].
+xschm 'CurrentMealsCountInfo': [current_meals_count] ==> [current_meals_count_info].
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% RULES DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -202,9 +211,28 @@ xrule 'DietGoalDecision'/2:
     ==>
       [diet_goal_decision set poor_decision].
 
+xrule 'CurrentMealsCountInfo'/1:
+      [current_meals_count eq 0.0 ]
+    ==>
+      [current_meals_count_info set no_meals_in_diet].
 
 
+xrule 'CurrentMealsCountInfo'/2:
+      [current_meals_count eq 1.0 ]
+    ==>
+      [current_meals_count_info set first_meal_added].
 
+
+xrule 'CurrentMealsCountInfo'/3:
+      [current_meals_count eq 2.0 ]
+    ==>
+      [current_meals_count_info set need_more_meals_in_diet].
+
+
+xrule 'CurrentMealsCountInfo'/4:
+      [current_meals_count eq 3.0 ]
+    ==>
+      [current_meals_count_info set may_have_more_meals_in_diet].
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%% STATES DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%%%
