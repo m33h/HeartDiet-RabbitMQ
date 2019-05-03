@@ -116,84 +116,121 @@ public class HeartDietInference {
             }
 
             State XTTstate = new State();
-
             StateElement patientMassE = new StateElement();
+            StateElement patientHeightE = new StateElement();
+            StateElement ageE = new StateElement();
+            StateElement patientKcalDemandE = new StateElement();
+            StateElement patientFatsE = new StateElement();
+            StateElement patientProteinsE = new StateElement();
+            StateElement patientSugarsE = new StateElement();
+            StateElement patientCurrentMealsCountE = new StateElement();
+            StateElement activityFactorE = new StateElement();
+            StateElement stateChangeTriggerE = new StateElement();
+            StateElement sexE = new StateElement();
+            StateElement dietGoalE = new StateElement();
+            StateElement dietGoalDecisionE = new StateElement();
+
             patientMassE.setAttributeName("mass");
             String massString = String.valueOf(results.get("mass"));
-            patientMassE.setValue(new SimpleNumeric(Double.valueOf(massString)));
-            XTTstate.addStateElement(patientMassE);
 
-            StateElement patientHeightE = new StateElement();
             patientHeightE.setAttributeName("height");
             String heightString = String.valueOf(results.get("height"));
-            patientHeightE.setValue(new SimpleNumeric(Double.valueOf(heightString)));
-            XTTstate.addStateElement(patientHeightE);
 
-            StateElement ageE = new StateElement();
             ageE.setAttributeName("age");
             String ageString = String.valueOf(results.get("age"));
-            ageE.setValue(new SimpleNumeric(Double.valueOf(ageString)));
-            XTTstate.addStateElement(ageE);
 
-            StateElement patientKcalDemandE = new StateElement();
             patientKcalDemandE.setAttributeName("kcal_demand");
             String kcalDemandString = String.valueOf(results.get("kcal_demand"));
-            patientKcalDemandE.setValue(new SimpleNumeric(Double.valueOf(kcalDemandString)));
-            XTTstate.addStateElement(patientKcalDemandE);
 
-            StateElement patientFatsE = new StateElement();
             patientFatsE.setAttributeName("fats");
             String fatsDemandString = String.valueOf(results.get("fats"));
-            patientFatsE.setValue(new SimpleNumeric(Double.valueOf(fatsDemandString)));
-            XTTstate.addStateElement(patientFatsE);
 
-            StateElement patientProteinsE = new StateElement();
             patientProteinsE.setAttributeName("proteins");
             String proteinsString = String.valueOf(results.get("proteins"));
-            patientProteinsE.setValue(new SimpleNumeric(Double.valueOf(proteinsString)));
-            XTTstate.addStateElement(patientProteinsE);
 
-            StateElement patientSugarsE = new StateElement();
             patientSugarsE.setAttributeName("sugars");
             String sugarsString = String.valueOf(results.get("sugars"));
-            patientSugarsE.setValue(new SimpleNumeric(Double.valueOf(sugarsString)));
-            XTTstate.addStateElement(patientSugarsE);
 
-            StateElement patientCurrentMealsCountE = new StateElement();
             patientCurrentMealsCountE.setAttributeName("current_meals_count");
             String currentMealsCountString = String.valueOf(results.get("current_meals_count"));
-            patientCurrentMealsCountE.setValue(new SimpleNumeric(Double.valueOf(currentMealsCountString)));
-            XTTstate.addStateElement(patientCurrentMealsCountE);
 
-            StateElement activityFactorE = new StateElement();
             activityFactorE.setAttributeName("activity_factor");
             String activityFactorString = String.valueOf(results.get("activity_factor"));
-            activityFactorE.setValue(new SimpleNumeric(Double.valueOf(activityFactorString)));
-            XTTstate.addStateElement(activityFactorE);
 
-            StateElement stateChangeTriggerE = new StateElement();
             stateChangeTriggerE.setAttributeName("state_change_trigger");
             String stateChangeTriggerString = String.valueOf(results.get("state_change_trigger"));
-            stateChangeTriggerE.setValue(new SimpleSymbolic(stateChangeTriggerString,1));
-            XTTstate.addStateElement(stateChangeTriggerE);
 
-            StateElement sexE = new StateElement();
             sexE.setAttributeName("sex");
             String sexString = String.valueOf(results.get("sex"));
-            sexE.setValue(new SimpleSymbolic(sexString,1));
-            XTTstate.addStateElement(sexE);
 
-            StateElement dietGoalE = new StateElement();
             dietGoalE.setAttributeName("diet_goal");
             String dietGoalString = String.valueOf(results.get("current_diet_goal"));
-            dietGoalE.setValue(new SimpleSymbolic(dietGoalString,1));
-            XTTstate.addStateElement(dietGoalE);
 
-            StateElement dietGoalDecisionE = new StateElement();
             dietGoalDecisionE.setAttributeName("diet_goal_decision");
-            dietGoalDecisionE.setValue(new SimpleSymbolic("good_decision",1));
-            XTTstate.addStateElement(dietGoalDecisionE);
 
+            patientKcalDemandE.setValue(new SimpleNumeric(Double.valueOf(kcalDemandString)));
+            patientMassE.setValue(new SimpleNumeric(Double.valueOf(massString)));
+            patientHeightE.setValue(new SimpleNumeric(Double.valueOf(heightString)));
+            patientProteinsE.setValue(new SimpleNumeric(Double.valueOf(proteinsString)));
+            ageE.setValue(new SimpleNumeric(Double.valueOf(ageString)));
+            patientCurrentMealsCountE.setValue(new SimpleNumeric(Double.valueOf(currentMealsCountString)));
+            activityFactorE.setValue(new SimpleNumeric(Double.valueOf(activityFactorString)));
+            stateChangeTriggerE.setValue(new SimpleSymbolic(stateChangeTriggerString,1));
+            sexE.setValue(new SimpleSymbolic(sexString,1));
+            dietGoalE.setValue(new SimpleSymbolic(dietGoalString,1));
+            patientSugarsE.setValue(new SimpleNumeric(Double.valueOf(sugarsString)));
+            patientFatsE.setValue(new SimpleNumeric(Double.valueOf(fatsDemandString)));
+
+
+            XTTstate.addStateElement(patientKcalDemandE);
+            XTTstate.addStateElement(patientMassE);
+            XTTstate.addStateElement(patientHeightE);
+            XTTstate.addStateElement(patientProteinsE);
+            XTTstate.addStateElement(ageE);
+            XTTstate.addStateElement(patientCurrentMealsCountE);
+            XTTstate.addStateElement(activityFactorE);
+            XTTstate.addStateElement(stateChangeTriggerE);
+            XTTstate.addStateElement(sexE);
+            XTTstate.addStateElement(dietGoalE);
+            XTTstate.addStateElement(patientSugarsE);
+            XTTstate.addStateElement(patientFatsE);
+
+            // threat monitor state elements do
+//
+//            // Creating StateElements objects, one for each attribute
+//            StateElement hourE = new StateElement();
+//            StateElement dayE = new StateElement();
+//            StateElement locationE = new StateElement();
+//            StateElement activityE = new StateElement();
+//
+//            // Setting the values of the state elements
+//            hourE.setAttributeName("hour");
+//            hourE.setValue(new SimpleNumeric(16d));
+//            dayE.setAttributeName("day");
+//            dayE.setValue(new SimpleSymbolic("mon",1));
+//
+//            locationE.setAttributeName("location");
+//            locationE.setValue(new SimpleSymbolic("work"));
+//
+//            activityE.setAttributeName("activity");
+//            activityE.setValue(new SimpleSymbolic("walking"));
+//
+//
+//
+//
+//
+//
+//            //Creating a XTTState object that agregates all the StateElements
+//            XTTstate.addStateElement(hourE);
+//            XTTstate.addStateElement(dayE);
+//            XTTstate.addStateElement(locationE);
+//            XTTstate.addStateElement(activityE);
+
+
+
+
+
+            //  end
 
             System.out.println("DD1");
             System.out.println("Printing current state before inference");
@@ -204,11 +241,13 @@ public class HeartDietInference {
             }
 
             System.out.println("DD2");
-            Debug.debugLevel = Debug.Level.SILENT;
+            Debug.debugLevel = Debug.Level.WARNING;
             HeaRT.fixedOrderInference(model, new String[]{"DietGoalDecision"},
                     new Configuration.Builder().setCsr(new ConflictSetFireAll())
                             .setInitialState(XTTstate)
                             .build());
+//            HeaRT.fixedOrderInference(model, new String[]{"DayTime", "Today", "Actions", "Threats"}, // threat monitor
+
 
             System.out.println("Printing current state (after inference FOI)");
             current = HeaRT.getWm().getCurrentState(model);
