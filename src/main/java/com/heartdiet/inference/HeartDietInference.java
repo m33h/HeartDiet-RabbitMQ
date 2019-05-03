@@ -20,6 +20,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
 
+import static java.lang.Thread.sleep;
+
 public class HeartDietInference {
     private String modelFilepath;
 
@@ -34,10 +36,6 @@ public class HeartDietInference {
         {
             Object keyvalue = results.get(keyStr);
             System.out.println("key: "+ keyStr + " value: " + keyvalue);
-
-            //for nested objects iteration if required
-            //if (keyvalue instanceof JSONObject)
-            //    printJsonObject((JSONObject)keyvalue);
         });
 
         try {
@@ -49,7 +47,6 @@ public class HeartDietInference {
             //Parsing the file with the model
             parser.parse(hmr_threat_monitor);
             model = parser.getModel();
-
 
             //Printing all the types within the model
             LinkedList<Type> types = model.getTypes();
@@ -117,19 +114,6 @@ public class HeartDietInference {
                 System.out.println();
                 System.out.println("=============================");
             }
-
-            // Creating StateElements objects, one for each attribute
-//			StateElement suggestedDietGoalE = new StateElement();
-//			suggestedDietGoalE.setAttributeName("suggested_diet_goal");
-
-//			StateElement dietGoalDecisionRateE = new StateElement();
-//			dietGoalDecisionRateE.setAttributeName("diet_goal_decision_rate");
-
-//			StateElement kcalDemandE = new StateElement();
-//			kcalDemandE.setAttributeName("kcal_demand");
-
-//			StateElement currentDietKcalE = new StateElement();
-//			currentDietKcalE.setAttributeName("diet_goal_kcal");
 
             State XTTstate = new State();
 
@@ -205,7 +189,13 @@ public class HeartDietInference {
             dietGoalE.setValue(new SimpleSymbolic(dietGoalString,1));
             XTTstate.addStateElement(dietGoalE);
 
+            StateElement dietGoalDecisionE = new StateElement();
+            dietGoalDecisionE.setAttributeName("diet_goal_decision");
+            dietGoalDecisionE.setValue(new SimpleSymbolic("good_decision",1));
+            XTTstate.addStateElement(dietGoalDecisionE);
 
+
+            System.out.println("DD1");
             System.out.println("Printing current state before inference");
             State current = HeaRT.getWm().getCurrentState(model);
 
@@ -213,33 +203,24 @@ public class HeartDietInference {
                 System.out.println("Attribute " + se.getAttributeName() + " = " + se.getValue());
             }
 
-            try {
-                Debug.debugLevel = Debug.Level.SILENT;
-                HeaRT.fixedOrderInference(model, new String[]{"SuggestedDietGoal"},
-                        new Configuration.Builder().setCsr(new ConflictSetFireAll())
-                                .setInitialState(XTTstate)
-                                .build());
-
-            } catch(UnsupportedOperationException e){
-                e.printStackTrace();
-            } catch (AttributeNotRegisteredException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
+            System.out.println("DD2");
+            Debug.debugLevel = Debug.Level.SILENT;
+            HeaRT.fixedOrderInference(model, new String[]{"DietGoalDecision"},
+                    new Configuration.Builder().setCsr(new ConflictSetFireAll())
+                            .setInitialState(XTTstate)
+                            .build());
 
             System.out.println("Printing current state (after inference FOI)");
             current = HeaRT.getWm().getCurrentState(model);
             for (StateElement se : current) {
                 System.err.println("Attribute " + se.getAttributeName() + " = " + se.getValue());
             }
+            System.out.println("DD3");
 
 
-            } catch (UnsupportedOperationException e) {
-                e.printStackTrace();
-            }
-
-
+        } catch (UnsupportedOperationException e) {
+            e.printStackTrace();
+        }
         catch (BuilderException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -253,6 +234,9 @@ public class HeartDietInference {
         }
         catch (ParsingSyntaxException e) {
             e.printStackTrace();
+        }
+        catch (AttributeNotRegisteredException e1) {
+           e1.printStackTrace();
         }
 
         return results;

@@ -1,0 +1,21 @@
+model  = new Model('urban-helper-cf.hmr')
+wm = new WorkingMemory(model)
+wm.setValueOf('recent_activity','in_vehicle#0.3')
+wm.setValueOf('location','pay_zone')
+wm.setValueOf('bluetooth_count','3')
+wm.setValueOf('screen_active','false')
+
+model.run(wm,inference=gdi,tables=['parkingReminder'])
+model.run(wm,inference=gdi,tables=['parkingReminder'])
+model.run(wm,inference=gdi,tables=['parkingReminder'])
+model.run(wm,inference=gdi,tables=['parkingReminder'])
+model.run(wm,inference=gdi,tables=['parkingReminder'])
+model.run(wm,inference=gdi,tables=['parkingReminder'])
+
+%wm.setValueOf('recent_activity','on_foot')
+%model.run(wm,inference=gdi,tables=['parkingReminder'])
+%model.run(wm,inference=gdi,tables=['parkingReminder'])
+
+
+
+wm.showCurrentState()

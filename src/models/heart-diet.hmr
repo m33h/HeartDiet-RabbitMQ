@@ -92,6 +92,10 @@ xtype [name: activity_factor_range,
        base: numeric,
        domain: [0.00 to 3.00]
       ].
+xtype [name: backend_message,
+       base: symbolic,
+       domain: [poor_decision, normal_decision, good_decision]
+      ].
 
 %%%%%%%%%%%%%%%%%%%%%%%%% ATTRIBUTES DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -167,13 +171,29 @@ xattr [name: activity_factor,
        type: activity_factor_range,
        comm: inter
        ].
+xattr [name: diet_goal_decision,
+       abbrev: goal_decision,
+       class: simple,
+       type: backend_message,
+       comm: inter
+       ].
 
 
 %%%%%%%%%%%%%%%%%%%%%%%% TABLE SCHEMAS DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%
 
+xschm 'DietGoalDecision': [height] ==> [diet_goal_decision].
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% RULES DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+xrule 'DietGoalDecision'/1:
+      [height in [0.000 to 50.000]]
+    ==>
+      [diet_goal_decision set good_decision].
+
+xrule 'DietGoalDecision'/2:
+      [height in [50.001 to 220.000]]
+    ==>
+      [diet_goal_decision set poor_decision].
 
 %%%%%%%%%%%%%%%%%%%%%%%%% STATES DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%%%
 
