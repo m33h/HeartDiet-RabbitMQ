@@ -187,7 +187,6 @@ public class HeartDietInference {
             XTTstate.addStateElement(patientSugarsE);
             XTTstate.addStateElement(patientFatsE);
 
-            System.out.println("DD1");
             System.out.println("Printing current state before inference");
             State current = HeaRT.getWm().getCurrentState(model);
 
@@ -195,7 +194,6 @@ public class HeartDietInference {
                 System.out.println("Attribute " + se.getAttributeName() + " = " + se.getValue());
             }
 
-            System.out.println("DD2");
             Debug.debugLevel = Debug.Level.WARNING;
             HeaRT.fixedOrderInference(model, new String[]{"DietGoalDecision", "CurrentMealsCountInfo"},
                     new Configuration.Builder().setCsr(new ConflictSetFireAll())
@@ -206,8 +204,8 @@ public class HeartDietInference {
             current = HeaRT.getWm().getCurrentState(model);
             for (StateElement se : current) {
                 System.err.println("Attribute " + se.getAttributeName() + " = " + se.getValue());
+                results.put(se.getAttributeName(), se.getValue());
             }
-            System.out.println("DD3");
 
 
         } catch (UnsupportedOperationException e) {
