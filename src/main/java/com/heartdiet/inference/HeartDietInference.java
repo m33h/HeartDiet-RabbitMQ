@@ -204,7 +204,7 @@ public class HeartDietInference {
             current = HeaRT.getWm().getCurrentState(model);
             for (StateElement se : current) {
                 System.err.println("Attribute " + se.getAttributeName() + " = " + se.getValue());
-                results.put(se.getAttributeName(), se.getValue());
+                results.put(se.getAttributeName(), se.getValue().toString());
             }
 
 
