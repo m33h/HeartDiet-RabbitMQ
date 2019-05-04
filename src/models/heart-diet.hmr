@@ -98,6 +98,10 @@ xtype [name: backend_message,
                 first_meal_added, no_meals_in_diet, need_more_meals_in_diet,
                 may_have_more_meals_in_diet]
       ].
+xtype [name: bmi_range,
+       base: numeric,
+       domain: [0.00 to 100.00]
+      ].
 
 
 
@@ -188,6 +192,13 @@ xattr [name: current_meals_count_info,
        type: backend_message,
        comm: inter
        ].
+xattr [name: patient_bmi,
+       abbrev: bmi,
+       class: simple,
+       type: bmi_range,
+       comm: in,
+       callback: 'CalculatePatientBmi'
+       ].
 
 
 
@@ -196,18 +207,62 @@ xattr [name: current_meals_count_info,
 
 %%%%%%%%%%%%%%%%%%%%%%%% TABLE SCHEMAS DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%
 
-xschm 'DietGoalDecision': [height] ==> [diet_goal_decision].
+xschm 'DietGoalDecision': [patient_bmi, diet_goal] ==> [diet_goal_decision].
 xschm 'CurrentMealsCountInfo': [current_meals_count] ==> [current_meals_count_info].
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% RULES DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 xrule 'DietGoalDecision'/1:
-      [height in [0.000 to 50.000]]
+      [patient_bmi in [0.000 to 18.500],
+       diet_goal eq reduce]
+    ==>
+      [diet_goal_decision set poor_decision].
+
+xrule 'DietGoalDecision'/2:
+      [patient_bmi in [18.501 to 24.999],
+       diet_goal eq reduce]
     ==>
       [diet_goal_decision set good_decision].
 
-xrule 'DietGoalDecision'/2:
-      [height in [50.001 to 220.000]]
+xrule 'DietGoalDecision'/3:
+      [patient_bmi in [25.000 to 100.00],
+       diet_goal eq reduce]
+    ==>
+      [diet_goal_decision set good_decision].
+
+xrule 'DietGoalDecision'/4:
+      [patient_bmi in [0.000 to 18.500],
+       diet_goal eq maintain]
+    ==>
+      [diet_goal_decision set poor_decision].
+
+xrule 'DietGoalDecision'/5:
+      [patient_bmi in [18.501 to 24.999],
+       diet_goal eq maintain]
+    ==>
+      [diet_goal_decision set good_decision].
+
+xrule 'DietGoalDecision'/6:
+      [patient_bmi in [25.000 to 100.00],
+       diet_goal eq maintain]
+    ==>
+      [diet_goal_decision set poor_decision].
+
+xrule 'DietGoalDecision'/7:
+      [patient_bmi in [0.000 to 18.500],
+       diet_goal eq put_on]
+    ==>
+      [diet_goal_decision set good_decision].
+
+xrule 'DietGoalDecision'/8:
+      [patient_bmi in [18.501 to 24.999],
+       diet_goal eq put_on]
+    ==>
+      [diet_goal_decision set good_decision].
+
+xrule 'DietGoalDecision'/9:
+      [patient_bmi in [25.000 to 100.00],
+       diet_goal eq put_on]
     ==>
       [diet_goal_decision set poor_decision].
 
@@ -216,18 +271,15 @@ xrule 'CurrentMealsCountInfo'/1:
     ==>
       [current_meals_count_info set no_meals_in_diet].
 
-
 xrule 'CurrentMealsCountInfo'/2:
       [current_meals_count eq 1.0 ]
     ==>
       [current_meals_count_info set first_meal_added].
 
-
 xrule 'CurrentMealsCountInfo'/3:
       [current_meals_count eq 2.0 ]
     ==>
       [current_meals_count_info set need_more_meals_in_diet].
-
 
 xrule 'CurrentMealsCountInfo'/4:
       [current_meals_count eq 3.0 ]

@@ -33,11 +33,11 @@ public class HeartDietInference {
         try {
             //Loading a file with a model
             XTTModel model = null;
-            SourceFile hmr_threat_monitor = new SourceFile("src/models/heart-diet.hmr");
+            SourceFile heartDietModel = new SourceFile("src/models/heart-diet.hmr");
             HMRParser parser = new HMRParser();
 
             //Parsing the file with the model
-            parser.parse(hmr_threat_monitor);
+            parser.parse(heartDietModel);
             model = parser.getModel();
 
             //Printing all the types within the model
@@ -206,7 +206,6 @@ public class HeartDietInference {
                 System.err.println("Attribute " + se.getAttributeName() + " = " + se.getValue());
                 results.put(se.getAttributeName(), se.getValue().toString());
             }
-
 
         } catch (UnsupportedOperationException e) {
             e.printStackTrace();
