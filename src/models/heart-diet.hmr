@@ -50,7 +50,26 @@ xtype [name: diet_goals,
       ].
 xtype [name: state_change_triggers,
        base: symbolic,
-       domain: [test, meal_added, profile_update]
+       domain: [
+         test,
+         meal_added,
+         profile_update,
+         simplified_date_started,
+         simplified_date_created,
+         diet_day_updated,
+         sign_in,
+         blog_link_clicked,
+         meal_realised,
+         meal_not_realised,
+         physical_activity_realised,
+         physical_activity_not_realised,
+         questions_started,
+         preferences_started,
+         activities_planning_started,
+         diet_building_started,
+         diet_maintenance_started,
+         finished
+       ]
       ].
 xtype [name: fats_range,
        base: numeric,
