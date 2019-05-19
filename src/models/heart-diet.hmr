@@ -121,6 +121,10 @@ xtype [name: bmi_range,
        base: numeric,
        domain: [0.00 to 100.00]
       ].
+xtype [name: db_key_range,
+       base: numeric,
+       domain: [1 to 10000]
+      ].
 
 
 
@@ -131,6 +135,12 @@ xattr [name: proteins,
        abbrev: diet_day_proteins_sum,
        class: simple,
        type: nutrition_range,
+       comm: inter
+       ].
+xattr [name: diet_plan_id,
+       abbrev: plan_id,
+       class: simple,
+       type: db_key_range,
        comm: inter
        ].
 xattr [name: fats,
@@ -153,6 +163,12 @@ xattr [name: current_meals_count,
        ].
 xattr [name: kcal_demand,
        abbrev: diet_day_overall_kcal_demand,
+       class: simple,
+       type: diet_kcal_range,
+       comm: inter
+       ].
+xattr [name: calories,
+       abbrev: calories_of_meals_in_diet_day,
        class: simple,
        type: diet_kcal_range,
        comm: inter
@@ -218,7 +234,34 @@ xattr [name: patient_bmi,
        comm: in,
        callback: 'CalculatePatientBmi'
        ].
-
+xattr [name: simplified_diet_day_proteins,
+       abbrev: simplified_diet_day_proteins_sum,
+       class: simple,
+       type: nutrition_range,
+       comm: inter,
+       callback: 'CalculateSimplifiedDietDayProteins'
+       ].
+xattr [name: simplified_diet_day_fats,
+       abbrev: simplified_diet_day_fats_sum,
+       class: simple,
+       type: nutrition_range,
+       comm: inter,
+       callback: 'CalculateSimplifiedDietDayFats'
+       ].
+xattr [name: simplified_diet_day_sugars,
+       abbrev: simplified_diet_day_sugars_sum,
+       class: simple,
+       type: nutrition_range,
+       comm: inter,
+       callback: 'CalculateSimplifiedDietDaySugars'
+       ].
+xattr [name: simplified_diet_day_meals_count,
+       abbrev: simplified_diet_day_meals_count,
+       class: simple,
+       type: meals_count,
+       comm: inter,
+       callback: 'CalculateSimplifiedDietDayMealsCount'
+       ].
 
 
 
