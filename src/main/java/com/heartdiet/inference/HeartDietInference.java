@@ -123,9 +123,13 @@ public class HeartDietInference {
             StateElement dietGoalDecisionE = new StateElement();
             StateElement dietPlanIdE = new StateElement();
             StateElement caloriesE = new StateElement();
+            StateElement dietDayE = new StateElement();
 
             dietPlanIdE.setAttributeName("diet_plan_id");
             String dietPlanIdString = String.valueOf(results.get("diet_plan_id"));
+
+            dietPlanIdE.setAttributeName("diet_day_id");
+            String dietDayIdString = String.valueOf(results.get("diet_day_id"));
 
             patientMassE.setAttributeName("mass");
             String massString = String.valueOf(results.get("mass"));
@@ -182,6 +186,7 @@ public class HeartDietInference {
             patientFatsE.setValue(new SimpleNumeric(Double.valueOf(fatsDemandString)));
             dietPlanIdE.setValue(new SimpleNumeric(Double.valueOf(dietPlanIdString)));
             caloriesE.setValue(new SimpleNumeric(Double.valueOf(caloriesString)));
+            dietDayE.setValue(new SimpleNumeric(Double.valueOf(caloriesString)));
 
 
             XTTstate.addStateElement(patientKcalDemandE);
@@ -197,6 +202,7 @@ public class HeartDietInference {
             XTTstate.addStateElement(patientSugarsE);
             XTTstate.addStateElement(patientFatsE);
             XTTstate.addStateElement(dietPlanIdE);
+            XTTstate.addStateElement(dietDayE);
 
             System.out.println("Printing current state before inference");
             State current = HeaRT.getWm().getCurrentState(model);

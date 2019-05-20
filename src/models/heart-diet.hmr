@@ -143,6 +143,12 @@ xattr [name: diet_plan_id,
        type: db_key_range,
        comm: inter
        ].
+xattr [name: diet_day_id,
+       abbrev: diet_day_id,
+       class: simple,
+       type: db_key_range,
+       comm: inter
+       ].
 xattr [name: fats,
        abbrev: diet_day_fats_sum,
        class: simple,
