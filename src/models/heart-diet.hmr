@@ -128,25 +128,12 @@ xtype [name: db_key_range,
 
 
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%% ATTRIBUTES DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 xattr [name: proteins,
        abbrev: diet_day_proteins_sum,
        class: simple,
        type: nutrition_range,
-       comm: inter
-       ].
-xattr [name: diet_plan_id,
-       abbrev: plan_id,
-       class: simple,
-       type: db_key_range,
-       comm: inter
-       ].
-xattr [name: diet_day_id,
-       abbrev: diet_day_id,
-       class: simple,
-       type: db_key_range,
        comm: inter
        ].
 xattr [name: fats,
@@ -161,6 +148,18 @@ xattr [name: sugars,
        type: nutrition_range,
        comm: inter
        ].
+xattr [name: diet_day_id,
+       abbrev: diet_day_id,
+       class: simple,
+       type: db_key_range,
+       comm: inter
+       ].
+xattr [name: diet_plan_id,
+       abbrev: plan_id,
+       class: simple,
+       type: db_key_range,
+       comm: inter
+       ].
 xattr [name: current_meals_count,
        abbrev: diet_day_meals_count,
        class: simple,
@@ -169,12 +168,6 @@ xattr [name: current_meals_count,
        ].
 xattr [name: kcal_demand,
        abbrev: diet_day_overall_kcal_demand,
-       class: simple,
-       type: diet_kcal_range,
-       comm: inter
-       ].
-xattr [name: calories,
-       abbrev: calories_of_meals_in_diet_day,
        class: simple,
        type: diet_kcal_range,
        comm: inter
@@ -239,6 +232,13 @@ xattr [name: patient_bmi,
        type: bmi_range,
        comm: in,
        callback: 'CalculatePatientBmi'
+       ].
+xattr [name: last_meal_calories,
+       abbrev: last_meal_calories,
+       class: simple,
+       type: diet_kcal_range,
+       comm: in,
+       callback: 'GetLastMealCalories'
        ].
 xattr [name: simplified_diet_day_proteins,
        abbrev: simplified_diet_day_proteins_sum,
