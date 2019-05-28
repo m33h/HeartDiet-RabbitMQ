@@ -125,6 +125,14 @@ public class HeartDietInference {
             StateElement dietPlanIdE = new StateElement();
             StateElement caloriesE = new StateElement();
             StateElement dietDayE = new StateElement();
+            StateElement simplifiedDietNormalDayCaloriesE = new StateElement();
+            StateElement simplifiedDietWeekendDayCaloriesE = new StateElement();
+
+            simplifiedDietNormalDayCaloriesE.setAttributeName("simplified_diet_normal_calories");
+            String simplifiedDietNormalDayCaloriesString = String.valueOf(results.get("simplified_diet_normal_day_calories"));
+
+            simplifiedDietWeekendDayCaloriesE.setAttributeName("simplified_diet_weekend_calories");
+            String simplifiedDietWeekendDayCaloriesString = String.valueOf(results.get("simplified_diet_weekend_day_calories"));
 
             dietDayE.setAttributeName("diet_day_id");
             String dietDayIdString = String.valueOf(results.get("diet_day_id"));
@@ -188,6 +196,8 @@ public class HeartDietInference {
             dietPlanIdE.setValue(new SimpleNumeric(Double.valueOf(dietPlanIdString)));
             caloriesE.setValue(new SimpleNumeric(Double.valueOf(caloriesString)));
             dietDayE.setValue(new SimpleNumeric(Double.valueOf(dietDayIdString)));
+            simplifiedDietNormalDayCaloriesE.setValue(new SimpleNumeric(Double.valueOf(simplifiedDietNormalDayCaloriesString)));
+            simplifiedDietWeekendDayCaloriesE.setValue(new SimpleNumeric(Double.valueOf(simplifiedDietWeekendDayCaloriesString)));
 
 
             XTTstate.addStateElement(patientKcalDemandE);
@@ -204,6 +214,8 @@ public class HeartDietInference {
             XTTstate.addStateElement(patientFatsE);
             XTTstate.addStateElement(dietPlanIdE);
             XTTstate.addStateElement(dietDayE);
+            XTTstate.addStateElement(simplifiedDietNormalDayCaloriesE);
+            XTTstate.addStateElement(simplifiedDietWeekendDayCaloriesE);
 
             System.out.println("Printing current state before inference");
             State current = HeaRT.getWm().getCurrentState(model);

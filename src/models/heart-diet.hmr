@@ -54,8 +54,8 @@ xtype [name: state_change_triggers,
          test,
          meal_added,
          profile_update,
-         simplified_date_started,
-         simplified_date_created,
+         simplified_diet_started,
+         simplified_diet_created,
          diet_day_updated,
          sign_in,
          blog_link_clicked,
@@ -172,6 +172,24 @@ xattr [name: kcal_demand,
        type: diet_kcal_range,
        comm: inter
        ].
+xattr [name: calories,
+       abbrev: calories_sum,
+       class: simple,
+       type: diet_kcal_range,
+       comm: inter
+       ].
+xattr [name: simplified_diet_normal_calories,
+       abbrev: simplified_diet_day_normal_calories,
+       class: simple,
+       type: diet_kcal_range,
+       comm: inter
+       ].
+xattr [name: simplified_diet_weekend_calories,
+       abbrev: simplified_diet_day_weekend_calories,
+       class: simple,
+       type: diet_kcal_range,
+       comm: inter
+       ].
 xattr [name: diet_goal,
        abbrev: diet_goal,
        class: simple,
@@ -240,28 +258,56 @@ xattr [name: last_meal_calories,
        comm: in,
        callback: 'GetLastMealCalories'
        ].
-xattr [name: simplified_diet_day_proteins,
+xattr [name: simplified_diet_day_normal_proteins,
        abbrev: simplified_diet_day_proteins_sum,
        class: simple,
        type: nutrition_range,
        comm: inter,
        callback: 'CalculateSimplifiedDietDayProteins'
        ].
-xattr [name: simplified_diet_day_fats,
+xattr [name: simplified_diet_day_normal_fats,
        abbrev: simplified_diet_day_fats_sum,
        class: simple,
        type: nutrition_range,
        comm: inter,
        callback: 'CalculateSimplifiedDietDayFats'
        ].
-xattr [name: simplified_diet_day_sugars,
+xattr [name: simplified_diet_day_normal_sugars,
        abbrev: simplified_diet_day_sugars_sum,
        class: simple,
        type: nutrition_range,
        comm: inter,
        callback: 'CalculateSimplifiedDietDaySugars'
        ].
-xattr [name: simplified_diet_day_meals_count,
+xattr [name: simplified_diet_day_normal_meals_count,
+       abbrev: simplified_diet_day_normal_meals_count,
+       class: simple,
+       type: meals_count,
+       comm: inter,
+       callback: 'CalculateSimplifiedDietDayMealsCount'
+       ].
+xattr [name: simplified_diet_day_weekend_proteins,
+       abbrev: simplified_diet_day_weekend_proteins_sum,
+       class: simple,
+       type: nutrition_range,
+       comm: inter,
+       callback: 'CalculateSimplifiedDietDayProteins'
+       ].
+xattr [name: simplified_diet_day_weekend_fats,
+       abbrev: simplified_diet_day_weekend_fats_sum,
+       class: simple,
+       type: nutrition_range,
+       comm: inter,
+       callback: 'CalculateSimplifiedDietDayFats'
+       ].
+xattr [name: simplified_diet_day_weekend_sugars,
+       abbrev: simplified_diet_day_weekend_sugars_sum,
+       class: simple,
+       type: nutrition_range,
+       comm: inter,
+       callback: 'CalculateSimplifiedDietDaySugars'
+       ].
+xattr [name: simplified_diet_day_weekend_meals_count,
        abbrev: simplified_diet_day_meals_count,
        class: simple,
        type: meals_count,
