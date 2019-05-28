@@ -48,6 +48,10 @@ xtype [name: diet_goals,
        base: symbolic,
        domain: [reduce, maintain, put_on]
       ].
+xtype [name: simplified_diet_possible_info,
+       base: symbolic,
+       domain: [calories_below_limit, calories_above_limit]
+      ].
 xtype [name: state_change_triggers,
        base: symbolic,
        domain: [
@@ -238,6 +242,12 @@ xattr [name: diet_goal_decision,
        type: backend_message,
        comm: inter
        ].
+xattr [name: simplified_diet_info,
+       abbrev: simplified_diet_info,
+       class: simple,
+       type: simplified_diet_possible_info,
+       comm: inter
+       ].
 xattr [name: current_meals_count_info,
        abbrev: meals_count_message,
        class: simple,
@@ -315,14 +325,11 @@ xattr [name: simplified_diet_day_weekend_meals_count,
        callback: 'CalculateSimplifiedDietDayMealsCount'
        ].
 
-
-
-
-
 %%%%%%%%%%%%%%%%%%%%%%%% TABLE SCHEMAS DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%
 
 xschm 'DietGoalDecision': [patient_bmi, diet_goal] ==> [diet_goal_decision].
 xschm 'CurrentMealsCountInfo': [current_meals_count] ==> [current_meals_count_info].
+xschm 'SimplifiedDietInfo': [simplified_diet_normal_calories, simplified_diet_weekend_calories] ==> [simplified_diet_info].
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% RULES DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -399,6 +406,16 @@ xrule 'CurrentMealsCountInfo'/4:
       [current_meals_count eq 3.0 ]
     ==>
       [current_meals_count_info set may_have_more_meals_in_diet].
+
+xrule 'SimplifiedDietInfo'/1:
+      [simplified_diet_normal_calories in [0.0 to 2000.0] ]
+    ==>
+      [simplified_diet_info set calories_below_limit].
+
+xrule 'SimplifiedDietInfo'/2:
+      [simplified_diet_normal_calories in [2001.0 to 3999.0] ]
+    ==>
+      [simplified_diet_info set calories_above_limit].
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%% STATES DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%%%
