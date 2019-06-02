@@ -279,12 +279,19 @@ xattr [name: simplified_diet_caloric_rate,
        comm: in,
        callback: 'SimplifiedDietCreated'
        ].
+xattr [name: diet_day_proteins_rate,
+       abbrev: diet_day_proteins_rate,
+       class: simple,
+       type: rate,
+       comm: in,
+       callback: 'DietDayProteinsRate'
+       ].
 
 %%%%%%%%%%%%%%%%%%%%%%%% TABLE SCHEMAS DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%
 
 xschm 'DietGoalDecision': [patient_bmi, patient_bmi_2, diet_goal] ==> [diet_goal_decision].
 xschm 'CurrentMealsCountInfo': [simplified_diet_info, current_meals_count] ==> [current_meals_count_info].
-xschm 'SimplifiedDietInfo': [simplified_diet_caloric_rate, state_change_trigger, simplified_diet_normal_calories, simplified_diet_weekend_calories] ==> [simplified_diet_info].
+xschm 'SimplifiedDietInfo': [simplified_diet_caloric_rate, state_change_trigger, simplified_diet_normal_calories, simplified_diet_weekend_calories, diet_day_proteins_rate] ==> [simplified_diet_info].
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% RULES DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -364,6 +371,7 @@ xrule 'CurrentMealsCountInfo'/4:
 
 xrule 'SimplifiedDietInfo'/1:
       [simplified_diet_caloric_rate in [0.0 to 50.0],
+       diet_day_proteins_rate in [0.0 to 50.0],
        simplified_diet_normal_calories in [0.0 to 2500.0]]
     ==>
       [simplified_diet_info set calories_below_limit].
