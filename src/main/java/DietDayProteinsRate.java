@@ -16,10 +16,10 @@ public class DietDayProteinsRate implements Callback{
         double proteins = Double.valueOf(wmm.getAttributeValue("proteins").toString());
 
         double proteinsDemand;
-        if(dietGoal == "reduce"){
+        if(dietGoal.equals("reduce/1")){
             proteinsDemand = mass * 1.0;
         }
-        else if(dietGoal == "maintain") {
+        else if(dietGoal.equals("maintain/1")){
             proteinsDemand = mass * 1.5;
         }
         else {
@@ -27,7 +27,7 @@ public class DietDayProteinsRate implements Callback{
         }
 
         double rateArg = (proteins * Math.PI) / (2 * proteinsDemand);
-        double rateExpValue = 20;
+        double rateExpValue = 3;
         double rateValue = 100 * Math.pow(Math.sin(rateArg), rateExpValue);
 
         try {
