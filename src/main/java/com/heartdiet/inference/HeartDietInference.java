@@ -226,7 +226,7 @@ public class HeartDietInference {
             }
 
             Debug.debugLevel = Debug.Level.WARNING;
-            HeaRT.fixedOrderInference(model, new String[]{"DietGoalDecision", "CurrentMealsCountInfo", "SimplifiedDietInfo"},
+            HeaRT.fixedOrderInference(model, new String[]{"DietDayInfo", "DietGoalDecision", "CurrentMealsCountInfo", "SimplifiedDietInfo"},
                     new Configuration.Builder().setCsr(new ConflictSetFireAll())
                             .setInitialState(XTTstate)
                             .build());
