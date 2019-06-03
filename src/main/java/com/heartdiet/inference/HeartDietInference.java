@@ -214,6 +214,7 @@ public class HeartDietInference {
             XTTstate.addStateElement(patientFatsE);
             XTTstate.addStateElement(dietPlanIdE);
             XTTstate.addStateElement(dietDayE);
+            XTTstate.addStateElement(caloriesE);
             XTTstate.addStateElement(simplifiedDietNormalDayCaloriesE);
             XTTstate.addStateElement(simplifiedDietWeekendDayCaloriesE);
 
