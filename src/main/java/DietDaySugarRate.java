@@ -27,6 +27,10 @@ public class DietDaySugarRate implements Callback{
         double rateExpValue = 10;
         double rateValue = 100 * Math.pow(Math.sin(rateArg), rateExpValue);
 
+        if(rateValue < 0) {
+            rateValue = 0;
+        }
+
         try {
             wmm.setAttributeValue(subject,new SimpleNumeric(rateValue),false);
         } catch (AttributeNotRegisteredException e) {

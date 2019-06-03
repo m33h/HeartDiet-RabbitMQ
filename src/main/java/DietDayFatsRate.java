@@ -30,6 +30,10 @@ public class DietDayFatsRate implements Callback{
         double rateExpValue = 5;
         double rateValue = 100 * Math.pow(Math.sin(rateArg), rateExpValue);
 
+        if(rateValue < 0) {
+            rateValue = 0;
+        }
+
         try {
             wmm.setAttributeValue(subject,new SimpleNumeric(rateValue),false);
         } catch (AttributeNotRegisteredException e) {
