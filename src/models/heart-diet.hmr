@@ -265,13 +265,6 @@ xattr [name: patient_bmi,
        comm: in,
        callback: 'CalculatePatientBmi'
        ].
-xattr [name: patient_bmi_2,
-       abbrev: bmi2,
-       class: simple,
-       type: bmi_range,
-       comm: in,
-       callback: 'CalculatePatientBmi'
-       ].
 xattr [name: simplified_diet_caloric_rate,
        abbrev: simplified_diet_caloric_rate,
        class: simple,
@@ -286,12 +279,33 @@ xattr [name: diet_day_proteins_rate,
        comm: in,
        callback: 'DietDayProteinsRate'
        ].
+xattr [name: diet_day_fats_rate,
+       abbrev: diet_day_fats_rate,
+       class: simple,
+       type: rate,
+       comm: in,
+       callback: 'DietDayFatsRate'
+       ].
+xattr [name: diet_day_sugars_rate,
+       abbrev: diet_day_sugars_rate,
+       class: simple,
+       type: rate,
+       comm: in,
+       callback: 'DietDaySugarRate'
+       ].
+xattr [name: caloric_rate,
+       abbrev: caloric_rate,
+       class: simple,
+       type: rate,
+       comm: in,
+       callback: 'DietDayCaloricRate'
+       ].
 
 %%%%%%%%%%%%%%%%%%%%%%%% TABLE SCHEMAS DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%
 
-xschm 'DietGoalDecision': [patient_bmi, patient_bmi_2, diet_goal] ==> [diet_goal_decision].
+xschm 'DietGoalDecision': [patient_bmi, diet_goal] ==> [diet_goal_decision].
 xschm 'CurrentMealsCountInfo': [simplified_diet_info, current_meals_count] ==> [current_meals_count_info].
-xschm 'SimplifiedDietInfo': [simplified_diet_caloric_rate, state_change_trigger, simplified_diet_normal_calories, simplified_diet_weekend_calories, diet_day_proteins_rate] ==> [simplified_diet_info].
+xschm 'SimplifiedDietInfo': [simplified_diet_caloric_rate, caloric_rate, state_change_trigger, simplified_diet_normal_calories, simplified_diet_weekend_calories, diet_day_proteins_rate, diet_day_fats_rate, diet_day_sugars_rate] ==> [simplified_diet_info].
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% RULES DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -331,12 +345,6 @@ xrule 'DietGoalDecision'/6:
     ==>
       [diet_goal_decision set poor_decision].
 
-xrule 'DietGoalDecision'/7:
-      [patient_bmi_2 in [0.000 to 18.500],
-       diet_goal eq put_on]
-    ==>
-      [diet_goal_decision set good_decision].
-
 xrule 'DietGoalDecision'/8:
       [patient_bmi in [18.501 to 24.999],
        diet_goal eq put_on]
@@ -372,6 +380,9 @@ xrule 'CurrentMealsCountInfo'/4:
 xrule 'SimplifiedDietInfo'/1:
       [simplified_diet_caloric_rate in [0.0 to 50.0],
        diet_day_proteins_rate in [0.0 to 50.0],
+       diet_day_fats_rate in [0.0 to 50.0],
+       diet_day_sugars_rate in [0.0 to 50.0],
+       caloric_rate in [0.0 to 50.0],
        simplified_diet_normal_calories in [0.0 to 2500.0]]
     ==>
       [simplified_diet_info set calories_below_limit].
