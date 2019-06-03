@@ -6,14 +6,10 @@ import heart.alsvfd.SimpleNumeric;
 import heart.exceptions.AttributeNotRegisteredException;
 import heart.exceptions.NotInTheDomainException;
 import heart.xtt.Attribute;
-import heart.alsvfd.Value;
-
-import java.util.Calendar;
 
 public class CalculatePatientBmi implements Callback{
     public void execute(Attribute subject, WorkingMemory wmm) {
         System.out.println("Executing CalculatePatientBmi for "+subject.getName());
-        int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) -1;
 
         try {
             double height = Double.valueOf(wmm.getAttributeValue("height").toString());
