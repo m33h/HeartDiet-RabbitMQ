@@ -56,6 +56,16 @@ xtype [name: simplified_diet_possible_info,
        base: symbolic,
        domain: [calories_below_limit, calories_above_limit]
       ].
+xtype [name: diet_day_possible_info,
+       base: symbolic,
+       domain: [
+         diet_incomplete,
+         diet_poor_rate,
+         proteins_problem,
+         sugars_problem,
+         fats_problem,
+         caloric_problem]
+      ].
 xtype [name: state_change_triggers,
        base: symbolic,
        domain: [
@@ -252,6 +262,12 @@ xattr [name: simplified_diet_info,
        type: simplified_diet_possible_info,
        comm: inter
        ].
+xattr [name: diet_day_info,
+       abbrev: diet_day_info,
+       class: simple,
+       type: diet_day_possible_info,
+       comm: inter
+       ].
 xattr [name: current_meals_count_info,
        abbrev: meals_count_message,
        class: simple,
@@ -293,8 +309,8 @@ xattr [name: diet_day_sugars_rate,
        comm: in,
        callback: 'DietDaySugarRate'
        ].
-xattr [name: caloric_rate,
-       abbrev: caloric_rate,
+xattr [name: diet_day_caloric_rate,
+       abbrev: diet_day_caloric_rate,
        class: simple,
        type: rate,
        comm: in,
@@ -305,7 +321,8 @@ xattr [name: caloric_rate,
 
 xschm 'DietGoalDecision': [patient_bmi, diet_goal] ==> [diet_goal_decision].
 xschm 'CurrentMealsCountInfo': [simplified_diet_info, current_meals_count] ==> [current_meals_count_info].
-xschm 'SimplifiedDietInfo': [simplified_diet_caloric_rate, caloric_rate, state_change_trigger, simplified_diet_normal_calories, simplified_diet_weekend_calories, diet_day_proteins_rate, diet_day_fats_rate, diet_day_sugars_rate] ==> [simplified_diet_info].
+xschm 'SimplifiedDietInfo': [simplified_diet_caloric_rate, state_change_trigger, simplified_diet_normal_calories, simplified_diet_weekend_calories] ==> [simplified_diet_info].
+xschm 'DietDayInfo': [diet_day_caloric_rate, state_change_trigger, diet_day_proteins_rate, diet_day_fats_rate, diet_day_sugars_rate] ==> [diet_day_info].
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% RULES DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -379,13 +396,67 @@ xrule 'CurrentMealsCountInfo'/4:
 
 xrule 'SimplifiedDietInfo'/1:
       [simplified_diet_caloric_rate in [0.0 to 50.0],
-       diet_day_proteins_rate in [0.0 to 50.0],
-       diet_day_fats_rate in [0.0 to 50.0],
-       diet_day_sugars_rate in [0.0 to 50.0],
-       caloric_rate in [0.0 to 50.0],
        simplified_diet_normal_calories in [0.0 to 2500.0]]
     ==>
       [simplified_diet_info set calories_below_limit].
+
+xrule 'DietDayInfo'/1:
+      [diet_day_proteins_rate in [0.0 to 50.0],
+       diet_day_fats_rate in [0.0 to 50.0],
+       diet_day_sugars_rate in [0.0 to 50.0],
+       diet_day_caloric_rate in [0.0 to 50.0]]
+    ==>
+      [diet_day_info set diet_incomplete].
+
+xrule 'DietDayInfo'/2:
+      [diet_day_proteins_rate in [50.1 to 80.0],
+       diet_day_fats_rate in [50.1 to 80.0],
+       diet_day_sugars_rate in [50.1 to 80.0],
+       diet_day_caloric_rate in [50.1 to 80.0]]
+    ==>
+      [diet_day_info set diet_poor_rate].
+
+xrule 'DietDayInfo'/3:
+      [diet_day_proteins_rate in [80.1 to 100.0],
+       diet_day_fats_rate in [80.1 to 100.0],
+       diet_day_sugars_rate in [80.1 to 100.0],
+       diet_day_caloric_rate in [80.1 to 100.0]]
+    ==>
+      [diet_day_info set acceptable_diet].
+
+xrule 'DietDayInfo'/4:
+      [diet_day_proteins_rate in [0 to 80.0],
+       diet_day_fats_rate in [80.1 to 100.0],
+       diet_day_sugars_rate in [80.1 to 100.0],
+       diet_day_caloric_rate in [80.1 to 100.0]]
+    ==>
+      [diet_day_info set proteins_problem].
+
+xrule 'DietDayInfo'/5:
+      [diet_day_proteins_rate in [80.1 to 100.0],
+       diet_day_fats_rate in [80.1 to 100.0],
+       diet_day_sugars_rate in [0 to 80.0],
+       diet_day_caloric_rate in [80.1 to 100.0]]
+    ==>
+      [diet_day_info set sugars_problem].
+
+xrule 'DietDayInfo'/6:
+      [diet_day_proteins_rate in [80.1 to 100.0],
+       diet_day_fats_rate in [0 to 80.0],
+       diet_day_sugars_rate in [80.1 to 100.0],
+       diet_day_caloric_rate in [80.1 to 100.0]]
+    ==>
+      [diet_day_info set fats_problem].
+
+xrule 'DietDayInfo'/7:
+      [diet_day_proteins_rate in [80.1 to 100.0],
+       diet_day_fats_rate in [80.1 to 100.0],
+       diet_day_sugars_rate in [80.1 to 100.0],
+       diet_day_caloric_rate in [0 to 80.0]]
+    ==>
+      [diet_day_info set caloric_problem].
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%% STATES DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
