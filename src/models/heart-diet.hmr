@@ -46,7 +46,7 @@ xtype [name: meals_count,
       ].
 xtype [name: diet_kcal_range,
        base: numeric,
-       domain: [0 to 4000]
+       domain: [0 to 6000]
       ].
 xtype [name: diet_goals,
        base: symbolic,
@@ -331,43 +331,43 @@ xrule 'DietGoalDecision'/1:
        diet_goal eq reduce]
     ==>
       [diet_goal_decision set poor_decision].
-
 xrule 'DietGoalDecision'/2:
-      [patient_bmi in [18.501 to 24.999],
-       diet_goal eq reduce]
-    ==>
-      [diet_goal_decision set good_decision].
-
-xrule 'DietGoalDecision'/3:
-      [patient_bmi in [25.000 to 100.00],
-       diet_goal eq reduce]
-    ==>
-      [diet_goal_decision set good_decision].
-
-xrule 'DietGoalDecision'/4:
       [patient_bmi in [0.000 to 18.500],
        diet_goal eq maintain]
     ==>
       [diet_goal_decision set poor_decision].
+xrule 'DietGoalDecision'/3:
+      [patient_bmi in [0.000 to 18.500],
+       diet_goal eq put_on]
+    ==>
+      [diet_goal_decision set good_decision].
 
+xrule 'DietGoalDecision'/4:
+      [patient_bmi in [18.501 to 24.999],
+       diet_goal eq reduce]
+    ==>
+      [diet_goal_decision set good_decision].
 xrule 'DietGoalDecision'/5:
       [patient_bmi in [18.501 to 24.999],
        diet_goal eq maintain]
     ==>
       [diet_goal_decision set good_decision].
-
 xrule 'DietGoalDecision'/6:
-      [patient_bmi in [25.000 to 100.00],
-       diet_goal eq maintain]
-    ==>
-      [diet_goal_decision set poor_decision].
-
-xrule 'DietGoalDecision'/8:
       [patient_bmi in [18.501 to 24.999],
        diet_goal eq put_on]
     ==>
       [diet_goal_decision set good_decision].
 
+xrule 'DietGoalDecision'/7:
+      [patient_bmi in [25.000 to 100.00],
+       diet_goal eq reduce]
+    ==>
+      [diet_goal_decision set good_decision].
+xrule 'DietGoalDecision'/8:
+      [patient_bmi in [25.000 to 100.00],
+       diet_goal eq maintain]
+    ==>
+      [diet_goal_decision set poor_decision].
 xrule 'DietGoalDecision'/9:
       [patient_bmi in [25.000 to 100.00],
        diet_goal eq put_on]
@@ -395,8 +395,14 @@ xrule 'CurrentMealsCountInfo'/4:
       [current_meals_count_info set may_have_more_meals_in_diet].
 
 xrule 'SimplifiedDietInfo'/1:
-      [simplified_diet_caloric_rate in [0.0 to 50.0],
+      [simplified_diet_caloric_rate in [0.0 to 80.0],
        simplified_diet_normal_calories in [0.0 to 2500.0]]
+    ==>
+      [simplified_diet_info set calories_below_limit].
+
+xrule 'SimplifiedDietInfo'/2:
+      [simplified_diet_caloric_rate in [0.0 to 80.0],
+       simplified_diet_normal_calories in [1500.0 to 5000.0]]
     ==>
       [simplified_diet_info set calories_below_limit].
 
