@@ -301,23 +301,9 @@ xrule 'CurrentActivity'/9:
     ].
     #1
 
-xrule 'DietPlanEvaluation'/7:
-    [
-        positive_action eq {min 95% in -604800s to 0} true
-    ]
-    ==>
-    [
-        extra_diet_points set 2000,
-        extra_diet_points_info set  week_extra_points
-    ]
-    :[
-        'PlayerLevel'
-    ].
-    #1
-
 xrule 'DietDayEvaluation'/10:
     [
-        positive_action eq {min 95% in -86400s to 0} true
+        positive_action eq {min 95% in -600h to 0} true
     ]
     ==>
     [
