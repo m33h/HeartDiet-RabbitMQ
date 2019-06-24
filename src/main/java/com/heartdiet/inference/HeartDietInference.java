@@ -33,7 +33,7 @@ public class HeartDietInference {
         try {
             //Loading a file with a model
             XTTModel model = null;
-            SourceFile heartDietModel = new SourceFile("src/models/heart-diet.hmr");
+            SourceFile heartDietModel = new SourceFile(this.modelFilepath);
             HMRParser parser = new HMRParser();
 
             //Parsing the file with the model
@@ -108,6 +108,7 @@ public class HeartDietInference {
             }
 
             State XTTstate = new State();
+
             StateElement patientMassE = new StateElement();
             StateElement patientHeightE = new StateElement();
             StateElement ageE = new StateElement();
@@ -226,7 +227,7 @@ public class HeartDietInference {
             }
 
             Debug.debugLevel = Debug.Level.WARNING;
-            HeaRT.fixedOrderInference(model, new String[]{"DietDayInfo", "DietGoalDecision", "CurrentMealsCountInfo", "SimplifiedDietInfo"},
+            HeaRT.fixedOrderInference(model, new String[]{"diet_day_info", "diet_goal_decision", "current_meals_count_info", "simplified_diet_info"},
                     new Configuration.Builder().setCsr(new ConflictSetFireAll())
                             .setInitialState(XTTstate)
                             .build());
