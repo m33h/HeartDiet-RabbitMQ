@@ -303,56 +303,46 @@ xattr [name: current_meals_count_info,
 
 xattr [name: patient_bmi,
     type: bmi_range,
+    abbrev: bmi,
     class: simple,
     comm: in,
-    callback: 'CalculatePatientBmi',
-    abbrev: patient_bmi,
-    desc: 'patient_bmi'
+    callback: 'CalculatePatientBmi'
     ].
-
 xattr [name: simplified_diet_caloric_rate,
     type: rate,
     class: simple,
-    comm: out,
+    comm: in,
     callback: 'SimplifiedDietCreated',
     abbrev: simplified_diet_caloric_rate,
     desc: 'simplified_diet_caloric_rate'
     ].
-
 xattr [name: diet_day_proteins_rate,
     type: rate,
     class: simple,
-    comm: out,
-    callback: 'DietDayProteinsRate',
+    comm: in,
+    callback: 'DietDayProteinsRate'
     abbrev: diet_day_proteins_rate,
-    desc: 'diet_day_proteins_rate'
     ].
-
 xattr [name: diet_day_fats_rate,
     type: rate,
     class: simple,
-    comm: out,
-    callback: 'DietDayFatsRate',
+    comm: in,
     abbrev: diet_day_fats_rate,
-    desc: 'diet_day_fats_rate'
+    callback: 'DietDayFatsRate'
     ].
-
 xattr [name: diet_day_sugars_rate,
     type: rate,
     class: simple,
-    comm: out,
-    callback: 'DietDaySugarRate',
+    comm: in,
     abbrev: diet_day_sugars_rate,
-    desc: 'diet_day_sugars_rate'
+    callback: 'DietDaySugarRate'
     ].
-
 xattr [name: diet_day_caloric_rate,
     type: rate,
     class: simple,
-    comm: out,
-    callback: 'DietDayCaloricRate',
+    comm: in,
+    callback: 'DietDayCaloricRate'
     abbrev: diet_day_caloric_rate,
-    desc: 'diet_day_caloric_rate'
     ].
 
 %%%%%%%%%%%%%%%%%%%%%%%% TABLE SCHEMAS DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%
