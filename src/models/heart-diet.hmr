@@ -367,7 +367,7 @@ xrule 'DietGoalDecision'/8:
     ==>
       [diet_goal_decision set poor_decision].
 xrule 'DietGoalDecision'/9:
-      [patient_bmi lt [25.000 to 100.00],
+      [patient_bmi in [25.000 to 100.00],
        diet_goal eq put_on]
     ==>
       [diet_goal_decision set poor_decision].

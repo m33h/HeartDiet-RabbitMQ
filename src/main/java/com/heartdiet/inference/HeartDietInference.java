@@ -109,150 +109,115 @@ public class HeartDietInference {
 
             State XTTstate = new State();
 
-            StateElement UserActivityE = new StateElement();
-            UserActivityE.setAttributeName("UserActivity");
-            UserActivityE.setValue(new SimpleSymbolic("sign_in"));
-            XTTstate.addStateElement(UserActivityE);
+            StateElement patientMassE = new StateElement();
+            StateElement patientHeightE = new StateElement();
+            StateElement ageE = new StateElement();
+            StateElement patientKcalDemandE = new StateElement();
+            StateElement patientFatsE = new StateElement();
+            StateElement patientProteinsE = new StateElement();
+            StateElement patientSugarsE = new StateElement();
+            StateElement patientCurrentMealsCountE = new StateElement();
+            StateElement activityFactorE = new StateElement();
+            StateElement stateChangeTriggerE = new StateElement();
+            StateElement sexE = new StateElement();
+            StateElement dietGoalE = new StateElement();
+            StateElement dietGoalDecisionE = new StateElement();
 
-//            StateElement CurrentActivityProfileE = new StateElement();
-//            CurrentActivityProfileE.setAttributeName("");
-//            CurrentActivityProfileE.setValue(new SimpleNumeric());
-//            XTTstate.addStateElement(CurrentActivityProfileE);
+            StateElement dietPlanIdE = new StateElement();
+            StateElement caloriesE = new StateElement();
+            StateElement dietDayE = new StateElement();
+            StateElement simplifiedDietNormalDayCaloriesE = new StateElement();
+            StateElement simplifiedDietWeekendDayCaloriesE = new StateElement();
 
-//            StateElement DietPointsSumE = new StateElement();
-//            DietPointsSumE.setAttributeName("");
-//            DietPointsSumE.setValue(new SimpleNumeric());
-//            XTTstate.addStateElement(DietPointsSumE);
+            simplifiedDietNormalDayCaloriesE.setAttributeName("simplified_diet_normal_calories");
+            String simplifiedDietNormalDayCaloriesString = String.valueOf(results.get("simplified_diet_normal_day_calories"));
 
-//            StateElement RankPointsSumE = new StateElement();
-//            RankPointsSumE.setAttributeName("");
-//            RankPointsSumE.setValue(new SimpleNumeric());
-//            XTTstate.addStateElement(RankPointsSumE);
+            simplifiedDietWeekendDayCaloriesE.setAttributeName("simplified_diet_weekend_calories");
+            String simplifiedDietWeekendDayCaloriesString = String.valueOf(results.get("simplified_diet_weekend_day_calories"));
 
-//            StateElement LastActivityPointsE = new StateElement();
-//            LastActivityPointsE.setAttributeName("");
-//            LastActivityPointsE.setValue(new SimpleNumeric());
-//            XTTstate.addStateElement(LastActivityPointsE);
+            dietDayE.setAttributeName("diet_day_id");
+            String dietDayIdString = String.valueOf(results.get("diet_day_id"));
 
-//            StateElement PositiveActionE = new StateElement();
-//            PositiveActionE.setAttributeName("");
-//            PositiveActionE.setValue(new SimpleNumeric());
-//            XTTstate.addStateElement(PositiveActionE);
+            dietPlanIdE.setAttributeName("diet_plan_id");
+            String dietPlanIdString = String.valueOf(results.get("diet_plan_id"));
 
-//            StateElement ExtraDietPointsInfoE = new StateElement();
-//            ExtraDietPointsInfoE.setAttributeName("");
-//            ExtraDietPointsInfoE.setValue(new SimpleNumeric());
-//            XTTstate.addStateElement(ExtraDietPointsInfoE);
+            caloriesE.setAttributeName("calories");
+            String caloriesString = String.valueOf(results.get("calories"));
 
-//            StateElement ExtraDietPointsE = new StateElement();
-//            ExtraDietPointsE.setAttributeName("");
-//            ExtraDietPointsE.setValue(new SimpleNumeric());
-//            XTTstate.addStateElement(ExtraDietPointsE);
+            patientMassE.setAttributeName("mass");
+            String massString = String.valueOf(results.get("mass"));
 
-//            StateElement GameLevelE = new StateElement();
-//            GameLevelE.setAttributeName("");
-//            GameLevelE.setValue(new SimpleNumeric());
-//            XTTstate.addStateElement(GameLevelE);
+            patientHeightE.setAttributeName("height");
+            String heightString = String.valueOf(results.get("height"));
 
-//            StateElement BadgeStatusE = new StateElement();
-//            BadgeStatusE.setAttributeName("");
-//            BadgeStatusE.setValue(new SimpleNumeric());
-//            XTTstate.addStateElement(BadgeStatusE);
+            ageE.setAttributeName("age");
+            String ageString = String.valueOf(results.get("age"));
 
-//            StateElement PlayerBadgeE = new StateElement();
-//            PlayerBadgeE.setAttributeName("");
-//            PlayerBadgeE.setValue(new SimpleNumeric());
-//            XTTstate.addStateElement(PlayerBadgeE);
+            patientKcalDemandE.setAttributeName("kcal_demand");
+            String kcalDemandString = String.valueOf(results.get("kcal_demand"));
 
-//            simplifiedDietNormalDayCaloriesE.setAttributeName("simplified_diet_normal_calories");
-//            String simplifiedDietNormalDayCaloriesString = String.valueOf(results.get("simplified_diet_normal_day_calories"));
-//
-//            simplifiedDietWeekendDayCaloriesE.setAttributeName("simplified_diet_weekend_calories");
-//            String simplifiedDietWeekendDayCaloriesString = String.valueOf(results.get("simplified_diet_weekend_day_calories"));
-//
-//            dietDayE.setAttributeName("diet_day_id");
-//            String dietDayIdString = String.valueOf(results.get("diet_day_id"));
-//
-//            dietPlanIdE.setAttributeName("diet_plan_id");
-//            String dietPlanIdString = String.valueOf(results.get("diet_plan_id"));
-//
-//            caloriesE.setAttributeName("calories");
-//            String caloriesString = String.valueOf(results.get("calories"));
-//
-//            patientMassE.setAttributeName("mass");
-//            String massString = String.valueOf(results.get("mass"));
-//
-//            patientHeightE.setAttributeName("height");
-//            String heightString = String.valueOf(results.get("height"));
-//
-//            ageE.setAttributeName("age");
-//            String ageString = String.valueOf(results.get("age"));
-//
-//            patientKcalDemandE.setAttributeName("kcal_demand");
-//            String kcalDemandString = String.valueOf(results.get("kcal_demand"));
-//
-//            patientFatsE.setAttributeName("fats");
-//            String fatsDemandString = String.valueOf(results.get("fats"));
-//
-//            patientProteinsE.setAttributeName("proteins");
-//            String proteinsString = String.valueOf(results.get("proteins"));
-//
-//            patientSugarsE.setAttributeName("sugars");
-//            String sugarsString = String.valueOf(results.get("sugars"));
-//
-//            patientCurrentMealsCountE.setAttributeName("current_meals_count");
-//            String currentMealsCountString = String.valueOf(results.get("current_meals_count"));
-//
-//            activityFactorE.setAttributeName("activity_factor");
-//            String activityFactorString = String.valueOf(results.get("activity_factor"));
-//
-//            stateChangeTriggerE.setAttributeName("state_change_trigger");
-//            String stateChangeTriggerString = String.valueOf(results.get("state_change_trigger"));
-//
-//            sexE.setAttributeName("sex");
-//            String sexString = String.valueOf(results.get("sex"));
-//
-//            dietGoalE.setAttributeName("diet_goal");
-//            String dietGoalString = String.valueOf(results.get("current_diet_goal"));
-//
-//            dietGoalDecisionE.setAttributeName("diet_goal_decision");
-//
-//            patientKcalDemandE.setValue(new SimpleNumeric(Double.valueOf(kcalDemandString)));
-//            patientMassE.setValue(new SimpleNumeric(Double.valueOf(massString)));
-//            patientHeightE.setValue(new SimpleNumeric(Double.valueOf(heightString)));
-//            patientProteinsE.setValue(new SimpleNumeric(Double.valueOf(proteinsString)));
-//            ageE.setValue(new SimpleNumeric(Double.valueOf(ageString)));
-//            patientCurrentMealsCountE.setValue(new SimpleNumeric(Double.valueOf(currentMealsCountString)));
-//            activityFactorE.setValue(new SimpleNumeric(Double.valueOf(activityFactorString)));
-//            stateChangeTriggerE.setValue(new SimpleSymbolic(stateChangeTriggerString,1));
-//            sexE.setValue(new SimpleSymbolic(sexString,1));
-//            dietGoalE.setValue(new SimpleSymbolic(dietGoalString,1));
-//            patientSugarsE.setValue(new SimpleNumeric(Double.valueOf(sugarsString)));
-//            patientFatsE.setValue(new SimpleNumeric(Double.valueOf(fatsDemandString)));
-//            dietPlanIdE.setValue(new SimpleNumeric(Double.valueOf(dietPlanIdString)));
-//            caloriesE.setValue(new SimpleNumeric(Double.valueOf(caloriesString)));
-//            dietDayE.setValue(new SimpleNumeric(Double.valueOf(dietDayIdString)));
-//            simplifiedDietNormalDayCaloriesE.setValue(new SimpleNumeric(Double.valueOf(simplifiedDietNormalDayCaloriesString)));
-//            simplifiedDietWeekendDayCaloriesE.setValue(new SimpleNumeric(Double.valueOf(simplifiedDietWeekendDayCaloriesString)));
-//
-//
-//            XTTstate.addStateElement(patientKcalDemandE);
-//            XTTstate.addStateElement(patientMassE);
-//            XTTstate.addStateElement(patientHeightE);
-//            XTTstate.addStateElement(patientProteinsE);
-//            XTTstate.addStateElement(ageE);
-//            XTTstate.addStateElement(patientCurrentMealsCountE);
-//            XTTstate.addStateElement(activityFactorE);
-//            XTTstate.addStateElement(stateChangeTriggerE);
-//            XTTstate.addStateElement(sexE);
-//            XTTstate.addStateElement(dietGoalE);
-//            XTTstate.addStateElement(patientSugarsE);
-//            XTTstate.addStateElement(patientFatsE);
-//            XTTstate.addStateElement(dietPlanIdE);
-//            XTTstate.addStateElement(dietDayE);
-//            XTTstate.addStateElement(caloriesE);
-//            XTTstate.addStateElement(simplifiedDietNormalDayCaloriesE);
-//            XTTstate.addStateElement(simplifiedDietWeekendDayCaloriesE);
+            patientFatsE.setAttributeName("fats");
+            String fatsDemandString = String.valueOf(results.get("fats"));
+
+            patientProteinsE.setAttributeName("proteins");
+            String proteinsString = String.valueOf(results.get("proteins"));
+
+            patientSugarsE.setAttributeName("sugars");
+            String sugarsString = String.valueOf(results.get("sugars"));
+
+            patientCurrentMealsCountE.setAttributeName("current_meals_count");
+            String currentMealsCountString = String.valueOf(results.get("current_meals_count"));
+
+            activityFactorE.setAttributeName("activity_factor");
+            String activityFactorString = String.valueOf(results.get("activity_factor"));
+
+            stateChangeTriggerE.setAttributeName("state_change_trigger");
+            String stateChangeTriggerString = String.valueOf(results.get("state_change_trigger"));
+
+            sexE.setAttributeName("sex");
+            String sexString = String.valueOf(results.get("sex"));
+
+            dietGoalE.setAttributeName("diet_goal");
+            String dietGoalString = String.valueOf(results.get("current_diet_goal"));
+
+            dietGoalDecisionE.setAttributeName("diet_goal_decision");
+
+            patientKcalDemandE.setValue(new SimpleNumeric(Double.valueOf(kcalDemandString)));
+            patientMassE.setValue(new SimpleNumeric(Double.valueOf(massString)));
+            patientHeightE.setValue(new SimpleNumeric(Double.valueOf(heightString)));
+            patientProteinsE.setValue(new SimpleNumeric(Double.valueOf(proteinsString)));
+            ageE.setValue(new SimpleNumeric(Double.valueOf(ageString)));
+            patientCurrentMealsCountE.setValue(new SimpleNumeric(Double.valueOf(currentMealsCountString)));
+            activityFactorE.setValue(new SimpleNumeric(Double.valueOf(activityFactorString)));
+            stateChangeTriggerE.setValue(new SimpleSymbolic(stateChangeTriggerString,1));
+            sexE.setValue(new SimpleSymbolic(sexString,1));
+            dietGoalE.setValue(new SimpleSymbolic(dietGoalString,1));
+            patientSugarsE.setValue(new SimpleNumeric(Double.valueOf(sugarsString)));
+            patientFatsE.setValue(new SimpleNumeric(Double.valueOf(fatsDemandString)));
+            dietPlanIdE.setValue(new SimpleNumeric(Double.valueOf(dietPlanIdString)));
+            caloriesE.setValue(new SimpleNumeric(Double.valueOf(caloriesString)));
+            dietDayE.setValue(new SimpleNumeric(Double.valueOf(dietDayIdString)));
+            simplifiedDietNormalDayCaloriesE.setValue(new SimpleNumeric(Double.valueOf(simplifiedDietNormalDayCaloriesString)));
+            simplifiedDietWeekendDayCaloriesE.setValue(new SimpleNumeric(Double.valueOf(simplifiedDietWeekendDayCaloriesString)));
+
+
+            XTTstate.addStateElement(patientKcalDemandE);
+            XTTstate.addStateElement(patientMassE);
+            XTTstate.addStateElement(patientHeightE);
+            XTTstate.addStateElement(patientProteinsE);
+            XTTstate.addStateElement(ageE);
+            XTTstate.addStateElement(patientCurrentMealsCountE);
+            XTTstate.addStateElement(activityFactorE);
+            XTTstate.addStateElement(stateChangeTriggerE);
+            XTTstate.addStateElement(sexE);
+            XTTstate.addStateElement(dietGoalE);
+            XTTstate.addStateElement(patientSugarsE);
+            XTTstate.addStateElement(patientFatsE);
+            XTTstate.addStateElement(dietPlanIdE);
+            XTTstate.addStateElement(dietDayE);
+            XTTstate.addStateElement(caloriesE);
+            XTTstate.addStateElement(simplifiedDietNormalDayCaloriesE);
+            XTTstate.addStateElement(simplifiedDietWeekendDayCaloriesE);
 
             System.out.println("Printing current state before inference");
             State current = HeaRT.getWm().getCurrentState(model);
