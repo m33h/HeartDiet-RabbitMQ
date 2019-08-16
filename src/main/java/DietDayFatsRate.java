@@ -14,7 +14,6 @@ public class DietDayFatsRate implements Callback{
         String dietGoal = wmm.getAttributeValue("diet_goal").toString();
         double mass = Double.valueOf(wmm.getAttributeValue("mass").toString());
         double fats = Double.valueOf(wmm.getAttributeValue("fats").toString());
-
         double fatsDemand;
         if(dietGoal.equals("reduce/1")){
             fatsDemand = mass * 1;

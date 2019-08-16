@@ -7,43 +7,42 @@ import heart.exceptions.AttributeNotRegisteredException;
 import heart.exceptions.NotInTheDomainException;
 import heart.xtt.Attribute;
 
-public class DietDaySugarsRate implements Callback{
+public class CalculateKcalDemand implements Callback{
     public void execute(Attribute subject, WorkingMemory wmm) {
-        System.out.println("Executing DietDaySugarsRate callback");
+        System.out.println("Executing CalculateKcalDemand callback");
 
         String sex = wmm.getAttributeValue("sex").toString();
         String dietGoal = wmm.getAttributeValue("diet_goal").toString();
         Double age = Double.valueOf(wmm.getAttributeValue("age").toString());
         Double mass = Double.valueOf(wmm.getAttributeValue("mass").toString());
         Double height = Double.valueOf(wmm.getAttributeValue("height").toString());
-        Double calories = Double.valueOf(wmm.getAttributeValue("calories").toString());
         Double activityFactor = Double.valueOf(wmm.getAttributeValue("activity_factor").toString());
 
         double ppm;
+        double extraKcal;
         if(sex == "male") {
-            ppm = 10 * mass + 6.25 * height - 5 * age 
+            ppm = 10 * mass + 6.25 * height - 5 * age + 5;
+            extraKcal = 500;
         }
         else {
-
+            ppm = 10 * mass + 6.25 * height - 5 * age - 161;
+            extraKcal = 300;
         }
 
-        double sugarsDemand;
+        double kcalDemand;
+        double baseKcal = ppm * activityFactor;
         if(dietGoal.equals("reduce/1")){
-            sugarsDemand = mass * 4.0;
+            kcalDemand = baseKcal - 500;
         }
-        else if(dietGoal.equals("maintain")) {
-            sugarsDemand = mass * 5.0;
+        else if(dietGoal.equals("put_on/1")) {
+            kcalDemand = baseKcal + extraKcal;
         }
         else {
-            sugarsDemand = mass * 6.0;
+            kcalDemand = baseKcal;
         }
-
-        double rateArg = (sugars * Math.PI) / (2 * sugarsDemand);
-        double rateExpValue = 20;
-        double rateValue = 100 * Math.pow(Math.sin(rateArg), rateExpValue);
 
         try {
-            wmm.setAttributeValue(subject,new SimpleNumeric(rateValue),false);
+            wmm.setAttributeValue(subject,new SimpleNumeric(kcalDemand),false);
         } catch (AttributeNotRegisteredException e) {
             Debug.debug("CALLBACK",
                     Debug.Level.WARNING,

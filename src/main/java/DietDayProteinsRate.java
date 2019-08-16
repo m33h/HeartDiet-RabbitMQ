@@ -17,13 +17,13 @@ public class DietDayProteinsRate implements Callback{
 
         double proteinsDemand;
         if(dietGoal.equals("reduce/1")){
-            proteinsDemand = mass * 1.0;
+            proteinsDemand = mass * 1.2;
         }
         else if(dietGoal.equals("maintain/1")){
-            proteinsDemand = mass * 1.5;
+            proteinsDemand = mass * 1.0;
         }
         else {
-            proteinsDemand = mass * 2.0;
+            proteinsDemand = mass * 1.4;
         }
 
         double rateArg = (proteins * Math.PI) / (2 * proteinsDemand);
